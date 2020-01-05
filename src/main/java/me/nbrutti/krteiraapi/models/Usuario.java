@@ -31,6 +31,11 @@ public class Usuario {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usuarios_papeis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "papel_id"))
-    private Set papeis = new HashSet();
+    private Set<Papel> papeis = new HashSet<>();
+    
+    public Usuario(final String email, final String senha) {
+    	this.email = email;
+    	this.senha = senha;
+    }
 
 }
