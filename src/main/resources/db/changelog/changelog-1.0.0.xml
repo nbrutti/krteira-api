@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    	http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1.0.0" author="Nicholas Brutti https://github.com/nbrutti">
+        <!-- Criação da tabela usuários -->
+        <createTable tableName="usuarios">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="usuario_pkey"
+                             uniqueConstraintName="usuario_id" nullable="false" />
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="senha" type="varchar(100)">
+            	<constraints nullable="false" />
+            </column>
+        </createTable>
+        
+        <!-- Criação da tabela papéis -->
+        <createTable tableName="papeis">
+        	<column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" primaryKeyName="papel_pkey"
+                             uniqueConstraintName="papel_id" nullable="false" />
+            </column>
+            <column name="tipo_papel" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        
+        <!-- Relacionamento usuário x papéis -->
+        <createTable tableName="usuarios_papeis">
+        	<column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="usuario_papel_pkey"
+                    uniqueConstraintName="usuario_papel_id" nullable="false" />
+            </column>
+            <column name="usuario_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="usuario_papel__usuario__fkey"
+                    referencedColumnNames="id" referencedTableName="usuarios" />
+            </column>
+            <column name="papel_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="usuario_papel__papel__fkey"
+                    referencedColumnNames="id" referencedTableName="papeis" />
+            </column>
+        </createTable>
+                
+        <addUniqueConstraint columnNames="email" constraintName="ak_email" tableName="usuarios" />
+    </changeSet>
+    
+    <!-- Criação dos papéis -->
+    <changeSet id="1.0.1" author="Nicholas Brutti https://github.com/nbrutti">
+    	<sql>
+    		INSERT INTO papeis(id, tipo_papel) VALUES (1, 'USUARIO');
+    		INSERT INTO papeis(id, tipo_papel) VALUES (2, 'ADMINISTRADOR');
+    	</sql>
+    </changeSet>    
+</databaseChangeLog>

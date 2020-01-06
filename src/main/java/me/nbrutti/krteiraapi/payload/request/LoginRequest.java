@@ -2,15 +2,13 @@ package me.nbrutti.krteiraapi.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class LoginRequest {
 	
 	@NotBlank
-	private String username;
+	private String email;
 
 	@NotBlank
 	private String password;

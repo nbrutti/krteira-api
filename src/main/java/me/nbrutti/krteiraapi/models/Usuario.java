@@ -1,14 +1,24 @@
 package me.nbrutti.krteiraapi.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @Entity
@@ -32,6 +42,11 @@ public class Usuario {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usuarios_papeis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "papel_id"))
     private Set<Papel> papeis = new HashSet<>();
+    
+    @Deprecated
+    public Usuario() {
+    	
+    }
     
     public Usuario(final String email, final String senha) {
     	this.email = email;
